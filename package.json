@@ -1,0 +1,19 @@
+{
+  "name": "image-analysis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "sls invoke local -f img-analysis --path request.json",
+    "aws":"sls invoke -f img-analysis --path request.json",
+    "logs":"sls logs -f img-analysis -t"
+  },
+  "keywords": ["serverless","aws", "analysis", "image", "rekognition", "translate"],
+  "author": "Matheus Brito @despossivel",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.643.0",
+    "axios": "^0.19.2"
+  }
+}
