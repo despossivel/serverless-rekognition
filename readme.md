@@ -1,5 +1,3 @@
-### Reconhecimento de coisas em imagens e Comparação de faces com Serverless e AWS Rekognition
-
 ![https://i0.wp.com/www.websystemer.no/wp-content/uploads/rekognition-image-video-analysis.png?w=600&ssl=1](https://i0.wp.com/www.websystemer.no/wp-content/uploads/rekognition-image-video-analysis.png?w=600&ssl=1)
 
 ### O Objetivo desse projeto é fazer o reconhecimento coisas em imagens e comparar duas faces, traduzindo o resultado para a linguagem de escolha do usuário.
@@ -31,7 +29,7 @@ Agora veja se tudo esta rodando supimpa em ambiente local.
     sls invoke local -f <nome da function> --path <diretorio da function>/request.json
 ```
 
-> O arquivo request.json contem os parâmetros necessários para simular a requisição a serviço.
+> O arquivo request.json contem os parâmetros necessários para simular a requisição ao serviço.
 ```bash
     yarn local
 ```
@@ -40,24 +38,25 @@ Se rodou tudo belezura, agora é hora de fazer o deploy para a AWS.
 ```bash
     sls deploy
 ```
-Quando o deploy for finalizado o comando vai lhe retornar um endpoint, algo como 
+Quando o deploy terminar, será retornado os endpoints, algo começando com 
 ```bash
     https://xr1zj3k69f.execute-api.us-east-1.amazonaws.com
 ```
 
-Agora para testarmos se tudo esta rodando filé na AWS podemos testar via CLI ou pelo nosso endpoint 
+Agora para testarmos se tudo esta rodando filé na AWS, podemos testar via CLI
 ```bash
     sls invoke -f <nome da function> --path <diretorio da function>/request.json
 ```
+ou pelo nosso endpoint fornecedos os query parameters necessários 
 
 ### Query parameters das functions
 
-### img-analysis
+img-analysis
 ```bash
     <seu endPoint>/dev/analyse?language=<idioma da resposta>&imageUrl=<image para ser analisada>
 ```
 
-### compare-faces
+compare-faces
 ```bash
 <seu endPoint>/dev/compare?language=<idioma da resposta>&source=<image fonte>&target=<image a ser comparada>
 ```
