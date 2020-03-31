@@ -5,8 +5,12 @@
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "local": "sls invoke local -f img-analysis --path request.json",
-    "aws":"sls invoke -f img-analysis --path request.json",
+    "localAnalysis": "sls invoke local -f img-analysis --path analysis/request.json",
+    "awsAnalysis":"sls invoke -f img-analysis --path analysis/request.json",
+
+    "localCompareFaces": "sls invoke local -f compare-faces --path compareFaces/request.json",
+    "awsCompareFaces":"sls invoke -f compare-faces --path compareFaces/request.json",
+    
     "logs":"sls logs -f img-analysis -t"
   },
   "keywords": ["serverless","aws", "analysis", "image", "rekognition", "translate"],
