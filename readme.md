@@ -55,10 +55,21 @@ img-analysis
 ```bash
     <seu endPoint>/dev/analyse?language=<idioma da resposta>&imageUrl=<image para ser analisada>
 ```
+exemplo
+```bash
+https://xr1zj3k69f.execute-api.us-east-1.amazonaws.com/dev/analyse?language=pt&imageUrl=https://www.osaogoncalo.com.br/img/normal/70000/1_0-15012564_00076985_0.jpg
+```
+
 
 compare-faces
 ```bash
 <seu endPoint>/dev/compare?language=<idioma da resposta>&source=<image fonte>&target=<image a ser comparada>
 ```
+exemplo
+
+```bash
+https://xr1zj3k69f.execute-api.us-east-1.amazonaws.com/dev/compare?language=ru&source=https://staticr1.blastingcdn.com/media/photogallery/2020/2/5/660x290/b_1200x680/ator-johnny-depp-esta-com-problemas-financeiros-segundo-revista-arquivo-blasting-news_2395461.jpg&target=https://upload.wikimedia.org/wikipedia/commons/5/5f/Johnny_Depp_Alice_Through_the_Looking_Glass_premiere.jpg
+```
+
 
 **OBS:**  Para que a analise da imagem aconteça com sucesso é necessário informar a URL da imagem a ser analisada. essa URL deve ser um caminho direto ao arquivo da mesma, ou seja, terminando em png, jpg e etc.

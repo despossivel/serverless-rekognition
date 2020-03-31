@@ -15,17 +15,14 @@ const CompareFaces = require('./compareFaces');
 const reko = new Rekognition();
 const translator = new Translate();
 
-const analysis = new Analysis({
+const dependencies = {
   rekoSvc: reko,
   translatorSvc: translator,
   getImageBuffer
-})
+};
 
-const compareFaces = new CompareFaces({
-  rekoSvc: reko,
-  translatorSvc: translator,
-  getImageBuffer
-})
+const analysis = new Analysis(dependencies)
+const compareFaces = new CompareFaces(dependencies)
 
 module.exports = {
   analysis: analysis.main.bind(analysis),

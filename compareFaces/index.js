@@ -7,6 +7,7 @@ class CompareFaces {
     this.rekoSvc = rekoSvc
     this.translatorSvc = translatorSvc
     this.getImageBuffer = getImageBuffer;
+    this.language = 'pt';
   }
 
   async compareFaces(sourceBuffer, targetBuffer) {
@@ -18,17 +19,17 @@ class CompareFaces {
       TargetImage: {
         Bytes: targetBuffer
       },
-     // SimilarityThreshold: 70
+      SimilarityThreshold: 70
     }).promise();
 
     return result.FaceMatches;
 
   }
 
-  async translateText(text, language = 'pt') {
+  async translateText(text) {
     const params = {
       SourceLanguageCode: 'en',
-      TargetLanguageCode: language,
+      TargetLanguageCode: this.language,
       Text: text
     };
 
@@ -38,12 +39,11 @@ class CompareFaces {
 
   }
 
-  async formatTextResults({ Similarity, Face }, language) {
-    const textMiddle = await this.translateText("in similatrity", language);
+  async formatTextResults({ Similarity, Face }) {
+    const textMiddle = await this.translateText("in similatrity");
     const text = `${Similarity.toFixed(2)}% ${textMiddle}`;
     return text;
   }
-
 
 
   async main(event) {
@@ -55,20 +55,35 @@ class CompareFaces {
         language
       } = event.queryStringParameters;
 
+      this.language = language;
+
       const sourceBuffer = await this.getImageBuffer(source);
       const targetBuffer = await this.getImageBuffer(target);
 
-      const [result] = await this.compareFaces(sourceBuffer, targetBuffer);
+      const result = await this.compareFaces(sourceBuffer, targetBuffer);
 
-      const finalText = await this.formatTextResults(result, language)
+      if (result.length == 0) return {
+        statusCode: 404,
+        body: {
+          text: await this.translateText("Similarity rate between images is very low!")
+        }
+      }
+
+      const [resultSimilarity] = result;
+      const finalText = await this.formatTextResults(resultSimilarity)
+      resultSimilarity.Similarity = resultSimilarity.Similarity.toFixed(2)
 
       return {
         statusCode: 200,
-        body: finalText
+        body: JSON.stringify({
+          Text: finalText,
+          ...resultSimilarity
+        })
       }
 
 
     } catch (error) {
+      console.error('Error:', error.stack)
       return {
         statusCode: 500,
         body: error.stack

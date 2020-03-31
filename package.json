@@ -6,14 +6,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "localAnalysis": "sls invoke local -f img-analysis --path analysis/request.json",
-    "awsAnalysis":"sls invoke -f img-analysis --path analysis/request.json",
-
+    "awsAnalysis": "sls invoke -f img-analysis --path analysis/request.json",
     "localCompareFaces": "sls invoke local -f compare-faces --path compareFaces/request.json",
-    "awsCompareFaces":"sls invoke -f compare-faces --path compareFaces/request.json",
-    
-    "logs":"sls logs -f img-analysis -t"
+    "awsCompareFaces": "sls invoke -f compare-faces --path compareFaces/request.json",
+    "logsAnalysis": "sls logs -f img-analysis -t",
+    "logsCompareFaces": "sls logs -f compare-faces -t"
   },
-  "keywords": ["serverless","aws", "analysis", "image", "rekognition", "translate"],
+  "keywords": [
+    "serverless",
+    "aws",
+    "analysis",
+    "image",
+    "rekognition",
+    "translate"
+  ],
   "author": "Matheus Brito @despossivel",
   "license": "ISC",
   "dependencies": {
