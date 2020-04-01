@@ -57,13 +57,16 @@ class CompareFaces {
 
       this.language = language;
 
-      const sourceBuffer = await this.getImageBuffer(source);
-      const targetBuffer = await this.getImageBuffer(target);
+      const [sourceBuffer, targetBuffer] = await Promise.all([this.getImageBuffer(source),
+                                                        this.getImageBuffer(target)])
 
       const result = await this.compareFaces(sourceBuffer, targetBuffer);
 
       if (result.length == 0) return {
         statusCode: 404,
+        headers: {
+          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        },
         body: {
           text: await this.translateText("Similarity rate between images is very low!")
         }
@@ -75,18 +78,23 @@ class CompareFaces {
 
       return {
         statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        },
         body: JSON.stringify({
           Text: finalText,
           ...resultSimilarity
         })
       }
 
-
     } catch (error) {
       console.error('Error:', error.stack)
       return {
         statusCode: 500,
-        body: error.stack
+        headers: {
+          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        },
+        body: 'Ops! Aconteceu alguma coisa, tente novamente mais tarde.'
       }
     }
 

@@ -43,23 +43,42 @@ class Analysis {
   confidenceFormat = (value) => value.toFixed(2);
 
   async translateWorkingItems(workingItems) {
-    for (const indexItem in workingItems) {
-      let name = workingItems[indexItem].Name;
-      name = await this.translateText(name)
-      workingItems[indexItem].Name = name;
-      workingItems[indexItem].Confidence = this.confidenceFormat(workingItems[indexItem].Confidence)
-      workingItems[indexItem].Parents = await this.translateParents(workingItems[indexItem].Parents)
+    const newList = [];
+
+    for (const { Name, Confidence, Parents } of workingItems) {
+
+      const [name, parents] = await Promise.all([
+        this.translateText(Name),
+        this.translateParents(Parents)
+      ])
+
+      const confidence = this.confidenceFormat(Confidence);
+
+      newList.push({
+        Name: name,
+        Parents: parents,
+        Confidence: confidence
+      })
     }
-    return workingItems;
+    return newList;
+
   }
 
   async translateParents(parents) {
-    for (const indexParents in parents) {
-      let name = parents[indexParents].Name;
-      name = await this.translateText(name)
-      parents[indexParents].Name = name;
+
+    const newParents = [];
+    for (const { Name } of parents) {
+      const name = await this.translateText(Name)
+
+      newParents.push({
+        Name: name,
+        ...parents
+      })
+
     }
-    return parents;
+
+
+    return newParents;
   }
 
 
@@ -85,8 +104,12 @@ class Analysis {
 
       return {
         statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+          //'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
+        },
         body: JSON.stringify({
-          text:texts,
+          text: texts,
           items: workingItemsFinal
         })
       }
@@ -96,7 +119,11 @@ class Analysis {
       console.error('Error:', error.stack)
       return {
         statusCode: 500,
-        body: error.stack
+        headers: {
+          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+          //'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
+        },
+        body: 'Ops! Aconteceu alguma coisa, tente novamente mais tarde.'
       }
     }
   }

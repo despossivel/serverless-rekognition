@@ -74,6 +74,9 @@ functions:
      - http:
          path: analyse
          method: get
+         cors:
+          origin: '*'
+          allowCredentials: false
   
   compare-faces:
     handler: handler.compareFaces
@@ -81,6 +84,9 @@ functions:
      - http:
          path: compare
          method: get
+         cors:
+          origin: '*'
+          allowCredentials: false
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
