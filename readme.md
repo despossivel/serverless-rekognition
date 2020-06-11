@@ -1,4 +1,4 @@
-![https://i0.wp.com/www.websystemer.no/wp-content/uploads/rekognition-image-video-analysis.png?w=600&ssl=1](https://i0.wp.com/www.websystemer.no/wp-content/uploads/rekognition-image-video-analysis.png?w=600&ssl=1)
+![https://miro.medium.com/max/600/1*ozYrdn7kUvdkQ2Eh6PARkg.png](https://miro.medium.com/max/600/1*ozYrdn7kUvdkQ2Eh6PARkg.png)
 
 ### O Objetivo desse projeto é fazer o reconhecimento coisas em imagens e comparar duas faces, traduzindo o resultado para a linguagem de escolha do usuário.
 
